@@ -1,7 +1,11 @@
 import "@/css/style.css";
 
-import { LEVEL_1 } from "@/ts/levels";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+
+import levels from "@/ts/levels";
 import { Level } from "@/ts/modules";
+import App from "@/vue/App.vue";
 
 class Rendering {
   canvasEl: HTMLCanvasElement;
@@ -26,10 +30,17 @@ class Game {
     this.rendering = new Rendering();
     const level = new Level({
       ctx: this.rendering.ctx,
-      data: LEVEL_1,
+      data: levels[0],
     });
     level.render();
   }
 }
 
-const game = new Game();
+const app = createApp(App);
+
+const pinia = createPinia();
+app.use(pinia);
+
+app.mount("#app");
+
+// const game = new Game();
